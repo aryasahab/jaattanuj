@@ -1,0 +1,40 @@
+clc;clear;clf
+funcprot(0)
+m=940D6 //eV/c^2
+hc=1973 //eVA
+D=4.7446 //eV
+al=1.44 
+ro=0.7416 //Ao
+rmin=0 ; rmax=4
+n=700
+h=(rmax-rmin)/(n-1)
+r=rmin:h:rmax
+rp=(r-ro)/ro
+v=D*(exp(-2*al*rp)-2*exp(-al*rp))
+PE=diag(v)
+dia=ones(1:n)
+odia=ones(1:n-1)
+Kmat=(-2*diag(dia)+diag(odia,1)+diag(odia,-1))
+KE=(-(hc^2)*Kmat)/(2*m*h^2)
+H=PE+KE
+[U,E]=spec(H)
+Eval=diag(E)
+disp("Energy eigen value = ",Eval(1:1))
+subplot(1,2,1)
+plot(r',U(:,1),'linewidth',2)
+xlabel("r---->","fontsize",4)
+ylabel("Wavefunction Ψ(r)---->","fontsize",4)
+title("Wavefunction Ψ(r) vs r","fontsize",5)
+a=gca()
+a.data_bounds=[0,1.5,0,0.2]
+a.thickness=2
+a.font_size=4
+subplot(1,2,2)
+plot(r,v,'linewidth',2)
+xlabel("r---->","fontsize",4)
+ylabel("Potential(V)---->","fontsize",4)
+title("Potential(V) vs r","fontsize",5)
+a=gca()
+a.data_bounds=[0,4,-5,5]
+a.thickness=2
+a.font_size=4
