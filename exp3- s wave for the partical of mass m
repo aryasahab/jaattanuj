@@ -1,0 +1,49 @@
+	                                      	CODE
+Ques- Solve the s-wave radial Schrodinger equation for a particle of mass m:
+                    d2y/dt2 = A(r)u(r)  ,  A(r) = 2m[V(r)-E]/h2  ,           For an harmonic oscillator potential:
+                        V(r)=(kr2)/2 +(br3)/3 
+for the ground state energy (in MeV) of particle to an accuracy of three significant digits. Also, plot the corresponding wave function. Choose m = 940 MeV/c2 ,     k=100 MeV fm-2, b=0,10,30 MeV fm-3. In these units, ch = 197.3 MeV fm. The ground state energy is expected to lie between 90 and 110 MeV for all three cases.
+
+clc;clear;clf;
+funcprot(0)
+hc=197.3            //(MeV fm)
+m=940              //(MeV/c^2)
+b=[0,10,30]        //MeV/fm^3 
+k=100               // MeV/fm^2
+rmin=0; rmax=3;     //fm 
+n=700
+h=(rmax-rmin)/(n-1)   // step size 
+r=rmin:h:rmax
+pat=["-","--",":"]
+for i=1:3
+    v=((k*r^2)/2)+((b(i)*r^3)/3)    
+    PE=diag(v);    
+    dia=ones(1:n)    
+    odia=ones(1:n-1)
+    Kmat=(-2*diag(dia)+diag(odia,1)+diag(odia,-1))
+    KE=(-(hc^2)*Kmat)/(2*m*h^2)
+    H=KE+PE
+    [U,E]=spec(H)    
+    format(7)    
+    Eval=diag(E)
+    disp("Energy eigen value for ground state(in MeV) for b="+string(b(i))+" is : ",Eval(1:1))    
+    subplot(2,1,1)     
+    plot(r',U(:,1),pat(i))
+    title("Wave function & Potential vs r","font_size",4)     
+    xlabel("r(in fm)","font_size",4)
+    ylabel("Wave function,Ψ(r)","font_size",4)     
+    legend("for b=0","for b=10","for b=30")    
+    a=gca()
+    a.data_bounds=[0,3,0,0.1]
+    a.thickness=2
+    a.font_size=4
+    subplot(2,1,2)
+    plot(r,v,pat(i),"linewidth",2)
+    xlabel("r(in Angstorm)","font_size",4)
+   ylabel("Potential,V(r)","font_size",4)
+   title("Potential vs r","font_size",4)
+   legend("for b=0","for b=10","for b=30",2)
+   a=gca()
+   a.thickness=2
+   a.font_size=4
+end
