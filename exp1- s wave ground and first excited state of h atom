@@ -1,0 +1,52 @@
+                                 CODE
+Ques- Solve the s-wave Schrodinger equation for the ground state and the first excited                
+state of the hydrogen atom :             
+d2y/dt2 = A(r)u(r)  ,  A(r) = 2m[V(r)-E] ,  where  V(r) = -e2/r
+where m is the reduced mass of the electron. Obtain the energy eigenvalues and plot the corresponding wavefunctions . Remember that the ground state energy of the hydrogen atom is~ -13.6 eV. Take e = 3.795(eVAo)1/2, hc = 1973(eVAo) and m = 0.511 x 106 eV/c2 .
+
+
+clc;clf;clear
+e=3.795                //eVA°^(1/2)
+hc=1973                //eVA°
+mc2=0.511*10^6        // eV
+ro=10^(-6)            // min value
+rn=15                 // max value 
+n=500                 //no. of points 
+dx=(rn-ro)/(n-1)
+x=ro+dx:dx:rn
+a=ones(1:n-1)
+b=ones(1:n-2)
+kmat=[-2*diag(a)+diag(b,+1)+diag(b,-1)]
+K=((-(hc)^2)/(2*mc2*dx^2))*kmat
+v=-(e^2)./x
+p=diag(v)
+H=K+p
+[eigenvector1,eigenvalue1]=spec(H)
+[eigenvalue,k]=gsort(diag(eigenvalue1),'g','i') 
+eigenvector=eigenvector1(:,k) 
+disp(eigenvalue(1:10))
+subplot(1,2,1)
+plot(x',eigenvector(:,1)./x','*m--','linewidth',0.6)
+plot(x',-eigenvector(:,2)./x','or--','linewidth',0.6) 
+plot(x,v/6,'linewidth',2) 
+plot(x',0,"g--",'linewidth',2)
+legend('Wavefunction(Ψ1)','Wavefunction(Ψ2)','Potential(v/
+6)','origin')
+title("Wavefunction and Potential vs distance",'fontsize',4)
+xlabel('Distance r (in A°)','fontsize',4) 
+ylabel("Wavefuntion(Ψ)",'fontsize',4) 
+a=gca()
+a.data_bounds=[0,10,-1.0,1]
+a.font_size=4
+
+a.thickness=2
+subplot(1,2,2)
+plot(x,v,'linewidth',2)
+title("Potential vs distance",'fontsize',4)
+xlabel('Distance r (in A°)','fontsize',4)
+ylabel("Potential",'fontsize',4)
+ax=gca()
+ax.data_bounds=[0,10,-200,0]
+ax.font_size=4
+ax.thickness=2
+ 
