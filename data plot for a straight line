@@ -1,0 +1,27 @@
+// fit the data to st. line l=A0 + a1T
+ T=[20,30,40,50,60,70]                  //x
+l=[800.3,800.4,800.6,800.7,800.9,801.0] //y
+clf
+plot2d(T,l,-3)
+n=length(T)
+sT=sum(T)           //sum x
+sl=sum(l)           //sum y
+sT2=sum(T.*T)       //sum x2
+sTl=sum(T.*l)       //sum xy
+A=[sT n;sT2 sT]
+B=[sl;sTl]
+sol=A\B
+a1=sol(1)
+a0=sol(2)
+Tn=0:0.1:100
+yfit=a1*Tn+a0
+plot(Tn,yfit,'b')
+xgrid(5)
+disp(T,l,T.*T,T.*l)
+disp("summation T ",sT)
+disp("summation l",sl)
+disp("summation T^2",sT2)
+disp("summation T*l ",sTl)
+
+disp("a1=",a1)
+disp("a0=",a0)
