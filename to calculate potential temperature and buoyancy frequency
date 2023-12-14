@@ -1,0 +1,45 @@
+clc ; clear ; clf
+Abhay=fscanfMat("C:\Users\bittoo\OneDrive\Documents\
+Abhay.txt")
+p=Abhay(:,1)
+h=Abhay(:,2)
+t=Abhay(:,3)+273.15
+theta=Abhay(:,9)
+lnp=log10(p)
+R=287.04
+g=9.8065
+cp=1005
+[n,m]=size(Abhay)
+po=zeros(n,1)
+po(:,1)=1005
+a=po./p
+b=a.^(R/cp)
+T=t.*b //potential tempreture
+subplot(1,2,1)
+plot(T,h/1000,'linewidth',2)
+plot(theta,h/1000,":r",'linewidth',2)
+legend("Observed","Expected",2)
+title("Height vs Potential Temperature",'fontsize',4)
+xlabel("Potential temperature (Theta)(k)",'fontsize',4)
+ylabel("Height(h)(km)",'fontsize',4)
+ax=gca()
+ax.font_size=4
+ax.thickness=2
+c=-g/R
+d=p./t
+dpdz=c.*d
+dTdp=zeros(n,1)
+for i=1:n-1
+ dTdp(i,1)=(T(i+1)-T(i))/(p(i+1)-p(i))
+end
+dTdz=dTdp.*dpdz
+N2=g.*dTdz./T
+subplot(1,2,2)
+plot(N2,lnp)
+title("log10(p) vs Buoyancy frequency",'fontsize',4)
+xlabel("Buoyancy frequency(hertz)",'fontsize',4)
+ylabel("log10(p)",'fontsize',4)
+ax=gca()
+ax.font_size=4
+ax.thickness=2
+ax.axes_reverse=["off","on","off"]
