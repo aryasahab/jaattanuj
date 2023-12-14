@@ -1,0 +1,46 @@
+clc;clf;clear;
+Abhay=fscanfMat("C:\Users\bittoo\OneDrive\Documents\
+Abhay.txt")
+p=Abhay(:,1);
+h=Abhay(:,2);
+t=Abhay(:,3);
+lgp=log(p)
+//Height vs Pressure
+subplot(2,2,1)
+plot(p,h/1000,'g','linewidth',2)
+title("Height vs Pressure",'fontsize',4)
+xlabel('Pressure(hpa)','fontsize',4)
+ylabel('Height(km)','fontsize',4)
+a=gca()
+a.thickness=2
+a.font_size=4
+//Height vs Temperature
+subplot(2,2,2)
+plot(t,h/1000,'linewidth',2)
+title("Height vs Temperature",'fontsize',4)
+xlabel('Temperature(C)','fontsize',4)
+ylabel('Height(km)','fontsize',4)
+b=gca()
+b.thickness=2
+b.font_size=4
+
+//Pressure vs Temperature
+subplot(2,2,3)
+plot(t,p,'r','linewidth',2)
+title("Pressure vs Temperature",'fontsize',4)
+xlabel('Temperature(C)','fontsize',4)
+ylabel('Pressure(hpa)','fontsize',4)
+c=gca()
+c.thickness=2
+c.font_size=4
+c.axes_reverse=["off","on","off"]
+//Log(p) vs Temperature
+subplot(2,2,4)
+plot(t,lgp,'m','linewidth',2)
+title("Log(p) vs Temperature",'fontsize',4)
+xlabel('Temperature(C)','fontsize',4)
+ylabel('LogP(hpa)','fontsize',4)
+d=gca()
+d.thickness=2
+d.font_size=4
+d.axes_reverse=["off","on","off"]
