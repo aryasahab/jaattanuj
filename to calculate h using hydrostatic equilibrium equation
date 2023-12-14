@@ -1,0 +1,43 @@
+clc;clear;clf
+Abhay=fscanfMat("C:\Users\bittoo\OneDrive\Documents\
+Abhay.txt")
+p=Abhay(:,1)
+h=Abhay(:,2)
+t=Abhay(:,3)+273.15
+lnp=log(p)
+lnt=log(t)
+R=287.04
+g=9.8065
+a=(R/g).*(t)
+b=log(p/1013)
+H=(-1)*a.*b //calculated height
+subplot(1,2,1)
+plot(p,h/1000,'r','linewidth',2)
+plot(p,H/1000,':g','linewidth',3)
+title("Height vs Pressure",'fontsize',4)
+xlabel("Pressure(hPa)",'fontsize',4)
+ylabel("Height(km)",'fontsize',4)
+legend("Expected","Calculated",1)
+ax=gca()
+ax.font_size=4
+ax.thickness=2
+[n,m]=size(Abhay)
+term=zeros(n,1)
+L=zeros(n,1)
+term(1,1)=(lnt(2,1)-lnt(1,1))/(lnp(2,1)-lnp(1,1))
+L(1,1)=(g/R)*term(1,1)
+term(n,1)=(lnt(n,1)-lnt(n-1,1))/(lnp(n,1)-lnp(n-1,1))
+L(n,1)=(g/R)*term(n,1)
+for i=2:n-1
+ temp=(lnt(i+1,1)-lnt(i,1))/(lnp(i+1,1)-lnp(i,1))
+ term(i,1)=(term(i-1,1)+temp)/2
+ L(i,1)=(g/R)*term(i,1)
+end
+subplot(1,2,2)
+plot(L*1000,h/1000)
+title("Height vs Lapse Rate",'fontsize',4)
+xlabel("Lapse Rate(in kelvin/metre)",'fontsize',4)
+ylabel("Height (in km)",'fontsize',4)
+ax=gca()
+ax.font_size=4
+ax.thickness=2
